@@ -1,0 +1,4 @@
+Sanal makineler ile alıştırmalar yaptım.
+Putty ile Windows sanal makinemden Ubuntu sanal makineme işlemler yaptım.
+Belediyedeki uzak sunucuya palto nun vpn i ile giriş yaptım.
+Gerekli Devops işlemlerini yönettim.

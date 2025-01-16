@@ -1,0 +1,4 @@
+Ubuntu Centos öğrendin.
+Virtual Box denedin.
+Docker Antrenman yaptın.
+Linux Temel komut alıştırmaları yaptın.

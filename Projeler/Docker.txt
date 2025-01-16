@@ -1,0 +1,164 @@
+pipeline {
+    agent any
+
+    stages {
+            stage('Git Check'){
+                steps{
+                    git branch:'master',credentialsId:"github-ro-access", url: 'git@github.com:OnlineBelediyemSampas/Sampas.Ebelediye.Tahsilat.Backend_.git'
+                }
+            }
+            stage ('Image Build&Push') {
+                steps{
+                    sh 'docker build -t onlinebelediye-api:dev .'
+                    sh 'docker tag onlinebelediye-api:dev registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-api:dev'
+                    sh 'docker push registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-api:dev'
+                }
+            }
+            stage ('Clean Up') {
+                steps{
+                    sh 'ssh  -t -t root@192.168.34.13 "docker stop onlinebelediye-api"'
+                    sh 'ssh  -t -t root@192.168.34.13 "docker rm onlinebelediye-api"'
+                    
+                }
+            }
+             stage ('Release-Dev') {
+                steps{
+                    sh 'ssh  -t -t root@192.168.34.13 "docker pull registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-api:dev"'
+                    sh 'ssh  -t -t root@192.168.34.13 "docker run --name=onlinebelediye-api -d --restart=always -e ASPNETCORE_ENVIRONMENT=Development -p 7053:80 registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-api:dev"'
+                }
+            }
+            
+           
+        }
+    
+}
+
+pipeline {
+    agent any
+
+    stages {
+            stage('Git Check'){
+                steps{
+                    git branch:'master',credentialsId:"github-ro-access", url: 'git@github.com:OnlineBelediyemSampas/SampasOnlineBelediyemFE_.git'
+                }
+            }
+            stage ('Image Build&Push') {
+                steps{
+                    sh 'docker build -t onlinebelediye-fe:dev .'
+                    sh 'docker tag onlinebelediye-fe:dev registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-fe:dev'
+                    sh 'docker push registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-fe:dev'
+                }
+            }
+            stage ('Clean Up') {
+                steps{
+                    sh 'ssh  -t -t root@192.168.34.13 "docker stop onlinebelediye-fe"'
+                    sh 'ssh  -t -t root@192.168.34.13 "docker rm  onlinebelediye-fe"'
+                    
+                }
+            }
+          
+             stage ('Release-Dev') {
+                steps{
+                    sh ' ssh  -t -t root@192.168.34.13 "docker pull registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-fe:dev"'
+                    sh ' ssh  -t -t root@192.168.34.13 "docker run --name=onlinebelediye-fe -d --restart=always  -p 7054:80 registry.sampas.com.tr/commons/onlinebelediye/onlinebelediye-fe:dev"'
+                }
+            }
+           
+        }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Check') {
+            steps {
+                git branch: 'main', credentialsId: "github-ro-access", url: 'git@github.com:Ebu13/Sampas_Mobil_Etkinlik.git'
+            }
+        }
+        stage('Image Build&Push') {
+            steps {
+                sh 'docker build -t sampas-mobil-etkinlik:dev .'
+                sh 'docker tag sampas-mobil-etkinlik:dev registry.sampas.com.tr/commons/sampas/sampas-mobil-etkinlik:dev'
+                sh 'docker push registry.sampas.com.tr/commons/sampas/sampas-mobil-etkinlik:dev'
+            }
+        }
+        stage('Clean Up') {
+            steps {
+                sh 'ssh -t -t root@192.168.34.13 "docker stop sampas-mobil-etkinlik"'
+                sh 'ssh -t -t root@192.168.34.13 "docker rm sampas-mobil-etkinlik"'
+            }
+        }
+        stage('Release-Dev') {
+            steps {
+                sh 'ssh -t -t root@192.168.34.13 "docker pull registry.sampas.com.tr/commons/sampas/sampas-mobil-etkinlik:dev"'
+                sh 'ssh -t -t root@192.168.34.13 "docker run --name=sampas-mobil-etkinlik -d --restart=always -e ASPNETCORE_ENVIRONMENT=Development -p 5262:80 registry.sampas.com.tr/commons/sampas/sampas-mobil-etkinlik:dev"'
+            }
+        }
+    }
+}
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Check') {
+            steps {
+                git branch: 'main', credentialsId: 'github-ro-access', url: 'git@github.com:Ebu13/EtkinlikWeb.git'
+            }
+        }
+        stage('Image Build & Push') {
+            steps {
+                sh 'docker build -t etkinlikweb:dev .'
+                sh 'docker tag etkinlikweb:dev registry.sampas.com.tr/commons/etkinlik/etkinlikweb:dev'
+                sh 'docker push registry.sampas.com.tr/commons/etkinlik/etkinlikweb:dev'
+            }
+        }
+        stage('Clean Up') {
+            steps {
+                sh 'ssh -t -t root@192.168.34.13 "docker stop etkinlikweb"'
+                sh 'ssh -t -t root@192.168.34.13 "docker rm etkinlikweb"'
+            }
+        }
+        stage('Release-Dev') {
+            steps {
+                sh 'ssh -t -t root@192.168.34.13 "docker pull registry.sampas.com.tr/commons/etkinlik/etkinlikweb:dev"'
+                sh 'ssh -t -t root@192.168.34.13 "docker run --name=etkinlikweb -d --restart=always -p 5173:5173 registry.sampas.com.tr/commons/etkinlik/etkinlikweb:dev"'
+            }
+        }
+    }
+}
