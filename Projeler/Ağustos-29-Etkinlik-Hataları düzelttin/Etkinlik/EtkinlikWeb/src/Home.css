@@ -1,0 +1,20 @@
+@media screen and (max-width: 700px){
+    .scroll-div{
+        overflow: auto;
+    }
+    
+}
+th, td {
+    border: 1px solid lightgray !important;
+
+}
+th {
+    text-align: center !important;
+    
+}
+    
+   
+
+table{
+    margin-bottom: 0 !important;
+}

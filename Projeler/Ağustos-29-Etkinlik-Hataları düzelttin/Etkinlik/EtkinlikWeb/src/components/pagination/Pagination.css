@@ -1,0 +1,51 @@
+.customPaginationLink {
+    background-color: white !important; /* Yeşil arkaplan */
+    color: black !important; /* Beyaz yazı */
+    border-radius: 20% !important;
+    height: 34px !important;
+  }
+  .customPaginationLinkArrows {
+    background-color: white !important; /* Yeşil arkaplan */
+    color: black !important; /* Beyaz yazı */
+    border: none !important;
+  }
+  .pagination{
+    height: 34px;
+  }
+  .customPaginationLink:focus, .customPaginationLinkArrows:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  ul{
+    margin: 0 !important;
+  }
+  .customPaginationLink:hover {
+    background-color: var(--state-feature) !important; /* Koyu yeşil arkaplan için hover durumu */
+  }
+  .page-link{
+   font-size: 14px!important;
+   display: flex;
+  }
+  .customPaginationLinkSelect {
+    background-color: white !important; /* Yeşil arkaplan */
+    color: black !important; /* Beyaz yazı */
+    border-radius: 8px;
+    border: 1px solid  var(--state-feature)!important;        
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+    
+  }
+  @media (max-width: 768px) {
+    .customPaginationLinkSelect {
+      display: none !important;
+    }
+  }
+  @media (max-width: 460px) {
+    nav{
+      display: flex;
+      justify-content: center;
+      flex-direction: column !important;
+    }
+   }
+   
